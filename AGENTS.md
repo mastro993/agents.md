@@ -98,6 +98,19 @@ Work style: Be radically precise. No fluff. Pure information only (drop grammar;
 - When using Convex, run `pnpm convex dev --once` to verify, not `pnpm convex codegen`.
 - When tasked to use the computer, prefer simple screenshot/mouse pointer events over accessibility.
 
+## UI
+
+Avoid “AI slop” UI. Be opinionated + distinctive.
+
+Do:
+
+- Typography: pick a real font; avoid Inter/Roboto/Arial/system defaults.
+- Theme: commit to a palette; use CSS vars; bold accents > timid gradients.
+- Motion: 1–2 high-impact moments (staggered reveal beats random micro-anim).
+- Background: add depth (gradients/patterns), not flat default.
+
+Avoid: purple-on-white clichés, generic component grids, predictable layouts.
+
 ## User Notes
 
 Use below list to store and recall user notes when asked to do so.
