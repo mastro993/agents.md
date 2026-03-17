@@ -25,6 +25,12 @@ Work style: Be radically precise. No fluff. Pure information only (drop grammar;
 - NEVER delete files, folders or other data unless explicilty approved or part of a plan.
 - Before writing code, stricly follow the below research rules
 
+## Plan Mode
+
+- Make the plan extremely concise. Sacrifice grammar for the sake of concision.
+- At the end of each plan, give me a list of unresolved questions to answer, if any.
+- Ask me questions until you have at least a 90% understanding of the plan.
+
 ## Research
 
 - Prefer skills if available over research.
