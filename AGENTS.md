@@ -11,7 +11,7 @@ Work style: Be radically precise. No fluff. Pure information only (drop grammar;
 - Editor: `code <path>`.
 - New deps: quick health check (recent releases/commits, adoption).
 - When asked to update the `AGENTS.md` to the latest version:
-  1. Fetch `https://raw.githubusercontent.com/robinebers/agents.md/main/AGENTS.md`.
+  1. Fetch `https://raw.githubusercontent.com/mastro993/agents.md/main/AGENTS.md`.
   2. Check if newer version version and merge without losing local changes.
 
 ## Guardrails
