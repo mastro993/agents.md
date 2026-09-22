@@ -1,33 +1,25 @@
-# Agents rules
+# Agent rules
 
-## Non negotiable
+## Non-negotiable
 
-- Do not preserve complexity just because it already exists. Do not introduce machinery because it looks architecturally impressive. Understand the real constraint, then fight for the smallest model that makes the correct behavior unsurprising.
-- Channel both "measure twice, cut once" and "yagni". Fight scope creep. Try to honor the dev's intent in both a minimal and realistic fashion.
-- Avoid writing big files. Prefer modularization. Group code by feature, then group code within each feature by purpose. Use separation of concerns. Prefer small, specialized modules over big swissknife classes.
-- When a refactoring opportunity can simplify code, take it. Remove unnecessary complexity while keeping behavior clear and correct.
+- Understand the real constraint, then choose the smallest realistic model that makes correct behavior unsurprising. Apply "measure twice, cut once" and YAGNI; resist scope creep and unnecessary machinery.
+- Simplify when possible. Prefer small, specialized modules grouped by feature and purpose over large files or swiss-army classes.
 - Always use Context7 MCP when I need library/API documentation, code generation, setup or configuration steps without me having to explicitly ask.
 
-## PR / CI
+## PR and CI
 
-- GitHub work: use matching workflow. Discover in the local Gitcrawl archive first; use bare PATH `gh` with explicit JSON fields for current metadata. PR refs use `gh pr view/diff`, not web search.
-- Pasted GitHub issue/PR: first `git status -sb`. Dirty: report before mutation. URL alone grants no push/pull permission.
-- PR: prefer fix/rewrite PR then merge, not close + duplicate direct commit.
-- PR quality: assume generated code may come from weaker AI. Review/improve before land; full rewrite okay when cleaner.
-- UI change PR: include before/after pictures. Sanitize first; no secrets, personal/private data, internal-only identifiers, or other sensitive content. Unsafe capture: state blocker; never upload.
-- PR/issue image upload: never computer use/browser. `curl -s "https://uploads.github.com/user-attachments/assets?name=<file>&content_type=<mime>&repository_id=$(gh api repos/<owner>/<repo> --jq .id)" -X POST -H "Authorization: Bearer $(gh auth token)" -H "Accept: application/json" --data-binary @<file>` → response `.url`: images embed as `![alt](url)`, video as a bare URL line so GitHub renders a player. Same CDN as drag-drop, inherits repo visibility, uploads are permanent. Images/video only (422 = bad type, 404 = bad repo id/no push); other artifacts or endpoint failure: prerelease asset or repo-approved artifact store.
-- `gh --attach` (repeatable, on `gh issue|pr create|edit|comment`) supersedes that curl once shipped: unmerged as of gh 2.98.0 (`cli/cli#14186`), so feature-detect, never assume. `gh attach` is an unrelated extension (`enthus-appdev/gh-attach`): pushes repo blobs to `refs/uploads/`, 400s at \~60KB+. Never use it for proof media.
-- Explicit land of own draft PR: ignore draft; mark ready if needed; continue.
-- `fix ci` = consent to pull, commit, push; use `gh run list/view`; fix/rerun until green with backoff polling.
-- GitHub quota: bare `gh` only (Octopool cache). Watch commands (`gh run watch`, `gh pr checks --watch`) shim-native since octopool 0.4.7; still poll one exact id, not loops.
-- gh reads: ALWAYS `--json <fields>`. Human-format `gh pr view/list/checks`, `run list`, bare `gh api graphql` delegate silently to real gh (GraphQL+core on personal token). Machine shapes ride the shared cache.
-- `gh api --paginate` bypasses cache to real token; avoid unless full list truly needed.
-- CI logs: fetch once per failed run; reuse printed output. One `gh search`/`list --json` over per-item view loops; narrow fields, exact refs.
-- `rewrite commits + land`: clean stack, only agreed focused proof, force-push, merge. No PR-body proof polish or CI babysit unless asked.
-- Issue fixed on `main` with proof: comment proof + commit/PR; close.
-- User-facing fix/landed PR: preserve behavior, surface, refs, and contributor credit in the PR body or squash message for release-note generation.
-- Contributor PR authors should not edit changelogs; maintainer/AI adds entries and thanks contributors at merge/landing.
-- Explicit land/ship authorizes needed branch changes and push. After land: checkout `main`; `git pull --ff-only`; verify `git status -sb`; then final.
-- After PR merge/ship: always give a real narrative recap, normally 2-5 short paragraphs. Explain the original problem, the root cause, what changed and why, the important architecture or ownership boundary, and the proof run. Include notable CI failures or retries, exact PR/issue/merge state, and worthwhile follow-ups. Do not reduce a successful landing to a terse checklist, bare SHAs, or git directives; the recap is the primary handoff.
-- Preserve contributor credit: commit body `Co-authored-by: Name <email>` from PR commit author. Changelog entries thank `@login` for user-visible work when added: at landing by default.
-
+- Before starting a task, rebase the working branch onto `main` to avoid working on stale code.
+- For GitHub work, use the matching workflow and search the local Gitcrawl archive first. Use bare PATH `gh` with explicit JSON fields for current metadata. Read PR refs with `gh pr view/diff`, never web search.
+- When given a GitHub issue or PR, first run `git status -sb`. Report a dirty tree before mutation. A URL alone grants no pull or push permission.
+- Prefer fixing or rewriting an existing PR before merging it, not closing it and duplicating the change in a direct commit. Treat generated code as suspect; review and improve it, including a full rewrite when cleaner.
+- UI change PRs require sanitized before/after images. Exclude secrets, personal or private data, internal-only identifiers, and other sensitive content. If safe capture is impossible, report the blocker and upload nothing.
+- Upload PR/issue images without computer use or a browser: `curl -s "https://uploads.github.com/user-attachments/assets?name=<file>&content_type=<mime>&repository_id=$(gh api repos/<owner>/<repo> --jq .id)" -X POST -H "Authorization: Bearer $(gh auth token)" -H "Accept: application/json" --data-binary @<file>`. Use response `.url`: `![alt](url)` for images; a bare URL line for video. Uploads use the same CDN as drag-and-drop, inherit repository visibility, and are permanent. Only images and video are supported; `422` means bad type, `404` means bad repository ID or no push access. For other artifacts or endpoint failure, use a prerelease asset or repository-approved artifact store.
+- Feature-detect repeatable `gh --attach` on `gh issue|pr create|edit|comment`; it supersedes the upload command when available. It was unmerged as of `gh` 2.98.0 (`cli/cli#14186`). Never use the unrelated `gh attach` extension (`enthus-appdev/gh-attach`) for proof media; it pushes blobs to `refs/uploads/` and fails near 60 KB.
+- Explicitly landing an owned draft PR authorizes marking it ready and continuing.
+- `fix ci` authorizes pulling, committing, and pushing. Use `gh run list/view`; fix or rerun until green with backoff polling.
+- Conserve GitHub quota: use bare `gh` through the Octopool cache. Always request explicit JSON fields for reads. Human-formatted `gh pr view/list/checks`, `gh run list`, and bare `gh api graphql` silently use real `gh` with GraphQL and core personal-token access. `gh api --paginate` also bypasses the cache; use it only when the full list is required. `gh run watch` and `gh pr checks --watch` are shim-native since Octopool 0.4.7; poll one exact ID, not loops.
+- Fetch each failed CI run's logs once and reuse the output. Prefer one narrow `gh search` or `list --json` call with exact refs over per-item views.
+- `rewrite commits + land` means produce a clean stack with only agreed focused proof, force-push, and merge. Skip PR-body proof polish and CI babysitting unless requested.
+- Preserve user-facing behavior, surface, references, and contributor credit in the PR body or squash message for release-note generation. Contributor PR authors do not edit changelogs; maintainers or AI add entries at landing and thank `@login` for user-visible work. Add `Co-authored-by: Name <email>` from the PR commit author to the commit body.
+- Explicit `land` or `ship` authorizes required branch changes and push. After merge, check out `main`, run `git pull --ff-only`, verify `git status -sb`, then report.
+- After merging or shipping, give a 2–5 paragraph narrative recap: original problem, root cause, change and rationale, important architecture or ownership boundary, proof, notable CI failures or retries, exact PR/issue/merge state, and useful follow-ups. Do not substitute a checklist, bare SHAs, or git commands.
