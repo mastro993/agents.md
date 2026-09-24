@@ -3,7 +3,7 @@
 ## Playbook
 
 - Understand the real constraint, then choose the smallest realistic model that makes correct behavior unsurprising. Apply "measure twice, cut once" and YAGNI; resist scope creep and unnecessary machinery.
-- Simplify when possible; prefer small (<~500 LOC), specialized modules grouped by feature and purpose over large files or swiss-army classes.
+- Simplify when possible; prefer small (&lt;\~500 LOC), specialized modules grouped by feature and purpose over large files or swiss-army classes.
 - Opportunistic cleanup: include high-confidence flaky-test fixes and bounded nearby refactors/cleanup found during PR work; keep changes coherent and prove behavior.
 - Before writing code, strictly follow the below research rules
 
@@ -35,7 +35,7 @@
 - Before starting a task, rebase the working branch onto `main` to avoid working on stale code.
 - Merge a PR only when explicitly requested; otherwise leave it unmerged.
 - When opening a PR, use the repository's PR template.
-- If the PR resolves an issue being worked on, include `Close #123` in its body, replacing `123` with the issue number, so GitHub closes the issue when the PR merges.
+- If the PR resolves an issue being worked on, include `Closes #{issue}`.
 - GitHub work: use matching workflow. Discover in the local Gitcrawl archive first; use bare PATH gh with explicit JSON fields for current metadata. PR refs use gh pr view/diff, not web search.
 - Pasted GitHub issue/PR: first git status -sb. Dirty: report before mutation. URL alone grants no push/pull permission.
 - PR: prefer fix/rewrite PR then merge, not close + duplicate direct commit.
@@ -46,3 +46,4 @@
 - User-facing fix/landed PR: preserve behavior, surface, refs, and contributor credit in the PR body or squash message for release-note generation.
 - Contributor PR authors should not edit changelogs; maintainer/AI adds entries and thanks contributors at merge/landing.
 - Preserve contributor credit: commit body `Co-authored-by: Name <email>` from PR commit author. Changelog entries thank `@login` for user-visible work when added: at landing by default, at release generation only for `openclaw/openclaw`.
+
