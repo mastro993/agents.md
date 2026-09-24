@@ -34,6 +34,8 @@
 
 - Before starting a task, rebase the working branch onto `main` to avoid working on stale code.
 - Merge a PR only when explicitly requested; otherwise leave it unmerged.
+- When opening a PR, use the repository's PR template.
+- If the PR resolves an issue being worked on, include `Close #123` in its body, replacing `123` with the issue number, so GitHub closes the issue when the PR merges.
 - GitHub work: use matching workflow. Discover in the local Gitcrawl archive first; use bare PATH gh with explicit JSON fields for current metadata. PR refs use gh pr view/diff, not web search.
 - Pasted GitHub issue/PR: first git status -sb. Dirty: report before mutation. URL alone grants no push/pull permission.
 - PR: prefer fix/rewrite PR then merge, not close + duplicate direct commit.
