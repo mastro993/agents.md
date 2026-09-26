@@ -17,7 +17,7 @@
 - Prefer researched knowledge over your own knowledge when skills are unavailable.
 - Always use Context7 MCP when I need library/API documentation, code generation, setup or configuration steps without me having to explicitly ask.
 - Always use Exa MCP for general search.
-- Always use GitHits MCP for open source examples
+- Always use GitHits MCP for open source examples.
 - Best results: Quote exact errors; prefer late-2025/2026+ sources.
 
 ## UI
@@ -46,4 +46,3 @@
 - User-facing fix/landed PR: preserve behavior, surface, refs, and contributor credit in the PR body or squash message for release-note generation.
 - Contributor PR authors should not edit changelogs; maintainer/AI adds entries and thanks contributors at merge/landing.
 - Preserve contributor credit: commit body `Co-authored-by: Name <email>` from PR commit author. Changelog entries thank `@login` for user-visible work when added: at landing by default, at release generation only for `openclaw/openclaw`.
-
