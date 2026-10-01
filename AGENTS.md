@@ -24,7 +24,6 @@
 
 - When the repository uses a component library (eg. shadcn, BoardUI, custom library), reuse its components instead of reimplementing them. If the appropriate component is unclear, stop and ask before implementing.
 - When no UI/UX direction is provided, use Mobbin MCP for inspiration. If multiple designs fit, stop and ask to choose before implementing.
-- Strictly use `@hugeicons/core-free-icons`. Nothing else. If you come across lucide-react or similar, replace it.
 
 ## Bugs
 
