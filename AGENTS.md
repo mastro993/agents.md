@@ -4,8 +4,18 @@
 
 - Understand the real constraint, then choose the smallest realistic model that makes correct behavior unsurprising. Apply "measure twice, cut once" and YAGNI; resist scope creep and unnecessary machinery.
 - Simplify when possible; prefer small (&lt;\~500 LOC), specialized modules grouped by feature and purpose over large files or swiss-army classes.
-- Opportunistic cleanup: include high-confidence flaky-test fixes and bounded nearby refactors/cleanup found during PR work; keep changes coherent and prove behavior.
 - Before writing code, strictly follow the below research rules
+
+## Cleanup
+
+Every task, sweep the files you touch and their direct callers/callees:
+
+- Delete dead code: unused exports, unreachable branches.
+- Delete production code only tests reach, together with its tests.
+- Merge or remove redundant tests.
+- Fix high-confidence flaky tests.
+- Refactor where it simplifies.
+- Done when every touched file is swept and behavior is proven unchanged.
 
 ## Documentation
 
