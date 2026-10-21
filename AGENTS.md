@@ -43,7 +43,7 @@ Every task, sweep the files you touch and their direct callers/callees:
 
 - Before starting a task, rebase the working branch onto `main` to avoid working on stale code.
 - Merge a PR only when explicitly requested; otherwise leave it unmerged.
-- When opening a PR, use the repository's PR template.
+- Open every PR as a draft (`gh pr create --draft`) using the repository's PR template; open it ready for review only when the user asks.
 - If the PR resolves an issue being worked on, include `Closes #{issue}`.
 - GitHub work: use matching workflow. Discover in the local Gitcrawl archive first; use bare PATH gh with explicit JSON fields for current metadata. PR refs use gh pr view/diff, not web search.
 - Pasted GitHub issue/PR: first git status -sb. Dirty: report before mutation. URL alone grants no push/pull permission.
